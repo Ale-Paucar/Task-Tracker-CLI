@@ -16,7 +16,7 @@ public class TaskService {
     }
 
     public Task addTask (String description){
-        Task newTask = new Task(nextId++,description, Status.IN_PROGRESS);
+        Task newTask = new Task(nextId++,description, Status.TODO);
         repository.addTask(newTask);
         return newTask;
     }
