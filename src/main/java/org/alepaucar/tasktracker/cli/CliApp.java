@@ -2,6 +2,7 @@ package org.alepaucar.tasktracker.cli;
 
 
 import org.alepaucar.tasktracker.models.Task;
+import org.alepaucar.tasktracker.repositories.TaskFileRepository;
 import org.alepaucar.tasktracker.services.ListHandler;
 import org.alepaucar.tasktracker.services.TaskHandler;
 import org.alepaucar.tasktracker.services.TaskService;
@@ -34,6 +35,8 @@ public class CliApp {
                     scanner.close();
                     return;
                 case "add":
+                    TaskFileRepository a = new TaskFileRepository();
+                    a.createFile();
                     handleAdd(inputArgs);
                     break;
                 case "list":
