@@ -1,14 +1,13 @@
 package org.alepaucar.tasktracker;
 
-import org.alepaucar.tasktracker.models.Status;
 import org.alepaucar.tasktracker.models.Task;
+import org.alepaucar.tasktracker.services.ListHandler;
 import org.alepaucar.tasktracker.services.TaskHandler;
 import org.alepaucar.tasktracker.services.TaskService;
-import org.alepaucar.tasktracker.utils.NumberValidator;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -74,67 +73,23 @@ public class Main {
                             if(submenuArgs.length==2){
                                 TaskHandler taskHandler = new TaskHandler(submenuArgs[1], service);
                                 taskHandler.handleRemoveTask();
-
                             }else{
                                 String valid = submenuArgs.length== 3 ? "valid": "";
                                 System.out.println("Please enter an"+valid+" ID.");
                             }
-                        } else if (submenuArgs[0].equalsIgnoreCase("mark-done")) {
+                        } else if (submenuArgs[0].equalsIgnoreCase("mark-done") || submenuArgs[0].equalsIgnoreCase("mark-in-progress")) {
                             if(submenuArgs.length==2){
-                                NumberValidator validator = new NumberValidator(submenuArgs[1]);
-                                if(validator.isValid()){
-                                    Task taskToEdit = service.getTaskById(validator.getNumericValue());
-                                    if(taskToEdit != null ){
-                                        taskToEdit.setStatus(Status.DONE);
-                                    }else{
-                                        System.out.println("Task not found");
-                                    }
-                                }else {
-                                    System.out.println("Not a valid ID");
-                                }
+                                TaskHandler taskHandler = new TaskHandler(submenuArgs[1], service);
+                                taskHandler.handleEditStatus(submenuArgs[0]);
                             }else{
-                                String valid = submenuArgs.length==3 ? "valid": "";
-                                System.out.println("Please enter an"+valid+" ID.");
+                                String just = submenuArgs.length == 3 ? "just ": "";
+                                System.out.println("Please enter "+just+"an ID.");
                             }
-                        } else if (submenuArgs[0].equalsIgnoreCase("mark-in-progress")) {
-                            if(submenuArgs.length==2){
-                                NumberValidator validator = new NumberValidator(submenuArgs[1]);
-                                if(validator.isValid()){
-                                    Task taskToEdit = service.getTaskById(validator.getNumericValue());
-                                    if(taskToEdit != null ){
-                                        taskToEdit.setStatus(Status.IN_PROGRESS);
-                                    }else{
-                                        System.out.println("Task not found");
-                                    }
-                                }else {
-                                    System.out.println("Not a valid ID");
-                                }
-                            }else{
-                                String valid = submenuArgs.length==3 ? "valid": "";
-                                System.out.println("Please enter an"+valid+" ID.");
-                            }
-                        } else if (submenuArgs[0].equalsIgnoreCase("list") && submenuArgs.length==1) {
-                            for(Task task : allTasks){
-                                System.out.println(task.getId()+": "+ task.getDescription() + " - " + task.getStatus());
-                            }
+
+
                         } else if (submenuArgs[0].equalsIgnoreCase("list")) {
-                            Status status;
-                            if(submenuArgs[1].equalsIgnoreCase("done")){
-                                status = Status.DONE;
-                            } else if (submenuArgs[1].equalsIgnoreCase("todo")) {
-                                status = Status.TODO;
-                            }else if (submenuArgs[1].equalsIgnoreCase("in-proggres")){
-                                status=Status.IN_PROGRESS;
-                            }else {
-                                System.out.println("Not a valid Status");
-                                break;
-                            }
-                            List<Task> tasksByStatus = allTasks.stream()
-                                                        .filter(task -> task.getStatus()==status)
-                                                        .collect(Collectors.toList());
-                            for(Task task : tasksByStatus){
-                                System.out.println(task.getId()+": "+ task.getDescription() + " - " + task.getStatus());
-                            }
+                            ListHandler listHandler = new ListHandler(service);
+                            listHandler.handleListCommand(Arrays.copyOfRange(submenuArgs, 1, submenuArgs.length));
                         }else {
                             System.out.println("Unknown task: '"+ submenuArgs[0] +"' .");
                         }

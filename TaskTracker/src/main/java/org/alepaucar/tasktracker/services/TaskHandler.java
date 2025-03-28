@@ -1,5 +1,6 @@
 package org.alepaucar.tasktracker.services;
 
+import org.alepaucar.tasktracker.models.Status;
 import org.alepaucar.tasktracker.models.Task;
 import org.alepaucar.tasktracker.utils.NumberValidator;
 
@@ -8,12 +9,13 @@ public class TaskHandler {
     private boolean valid;
     private long id;
     private Task task = null;
-    private TaskService service;
+    private final TaskService service;
 
     public TaskHandler(String id, TaskService service) {
+        this.service = service;
         NumberValidator validator = new NumberValidator(id);
         if(validator.isValid()){
-            this.service = service;
+
             this.task = service.getTaskById(validator.getNumericValue());
             this.valid = (task != null);
         }else {
@@ -51,5 +53,25 @@ public class TaskHandler {
         } else {
             System.out.println("Error: Task could not be deleted.");
         }
+    }
+
+    public void handleEditStatus(String inputStatus) {
+        if(!valid){
+            System.out.println("Task not found. Please enter a valid ID");
+            return;
+        }
+        Status newStatus = switch (inputStatus.toLowerCase()) {
+            case "mark-done" -> Status.DONE;
+            case "mark-in-progress" -> Status.IN_PROGRESS;
+            default -> null;
+        };
+
+        if(newStatus!=null){
+            task.setStatus(newStatus);
+            System.out.println("Task status updated successfully: " + task.getStatus());
+        }else {
+            System.out.println("Error: Unknown status command. Use 'mark-done' or 'mark-in-progress'.");
+        }
+
     }
 }
