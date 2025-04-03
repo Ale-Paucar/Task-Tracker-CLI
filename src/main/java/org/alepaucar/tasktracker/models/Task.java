@@ -22,6 +22,14 @@ public class Task {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public Task(long id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.description = description;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public long getId() {
         return id;
     }

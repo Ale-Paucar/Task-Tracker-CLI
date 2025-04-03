@@ -12,7 +12,10 @@ public class TaskService {
 
     public TaskService() {
         this.repository = new TaskRepository();
-        this.nextId = 0;
+        this.nextId = repository.getAllTasks().stream() // Convertimos la lista de tareas en un flujo (stream)
+                .mapToLong(Task::getId)  // Extraemos los valores de ID como tipo `long`
+                .max()                   // Buscamos el ID más alto
+                .orElse(-1) + 1;
     }
 
     public Task addTask (String description){
@@ -40,5 +43,9 @@ public class TaskService {
         } else {
             throw new IllegalArgumentException("Task not found");
         }
+    }
+
+    public void deleteAll() {
+        repository.deleteAll();
     }
 }

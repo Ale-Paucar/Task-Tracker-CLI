@@ -4,11 +4,12 @@ import org.alepaucar.tasktracker.models.Task;
 import org.alepaucar.tasktracker.models.Status;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class JsonMapperUtil {
 
-    private JsonMapperUtil() {} // Evitar instancias
+    private JsonMapperUtil() {}
 
 
     public static String taskToJson(Task task) {
@@ -23,13 +24,22 @@ public class JsonMapperUtil {
 
 
     public static Task jsonToTask(String json) {
-        json = json.replaceAll("[{}]", "");
+
+        json = json.replace("{", "").replace("}", "");
+
+
+        json = json.replaceAll(":\"([0-9T\\-:\\.]+)\"", ":\"$1\""); //supuestamente me ayudaria con las fechas, pero temo sacarlo, pues no es la solucion
+
+
         String[] pairs = json.split(",");
 
         Map<String, String> map = new HashMap<>();
         for (String pair : pairs) {
-            String[] keyValue = pair.split(":");
+
+            String[] keyValue = pair.split(":", 2);
+
             if (keyValue.length == 2) {
+
                 map.put(keyValue[0].replace("\"", "").trim(), keyValue[1].replace("\"", "").trim());
             }
         }
@@ -37,10 +47,11 @@ public class JsonMapperUtil {
         long id = Long.parseLong(map.get("id"));
         String description = map.get("description");
         Status status = Status.valueOf(map.get("status"));
+
         LocalDateTime createdAt = LocalDateTime.parse(map.get("createdAt"));
         LocalDateTime updatedAt = LocalDateTime.parse(map.get("updatedAt"));
 
-        return new Task(id, description, status);
+        return new Task(id, description, status,createdAt,updatedAt);
     }
 
 

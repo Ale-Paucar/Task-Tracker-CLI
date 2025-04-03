@@ -36,12 +36,13 @@ public class CliApp {
                     scanner.close();
                     return;
                 case "add":
-                    TaskFileRepository a = new TaskFileRepository();
-                    a.createFile();
                     handleAdd(inputArgs);
                     break;
                 case "list":
                     handleList();
+                    break;
+                case "delete-all":
+                    handleDeleteAll();
                     break;
                 default:
                     System.out.println("Unknown command: '" + inputArgs[0] + "'.");
@@ -49,10 +50,22 @@ public class CliApp {
         }
     }
 
+    private void handleDeleteAll() {
+        System.out.print("Are you sure you want to delete all tasks? (y/n): ");
+        String userInput = scanner.nextLine().trim().toLowerCase();
+        if (userInput.equals("y")) {
+            service.deleteAll();
+            System.out.println("All tasks have been deleted.");
+        } else {
+            System.out.println("Operation cancelled.");
+        }
+    }
+
     private void printMainMenu() {
         System.out.println("\n> Please enter a command (add/list/exit):");
         System.out.println("  add <new task>           - Create a new task");
         System.out.println("  list                     - Show all tasks");
+        System.out.println("  delete-all               - Delete all task data");
         System.out.println("  exit                     - Terminate the program");
         System.out.print("\n> ");
     }
@@ -60,12 +73,7 @@ public class CliApp {
     private void handleAdd(String[] inputArgs) {
         if (inputArgs.length > 1 && !inputArgs[1].isBlank()) {
             Task newTask = service.addTask(inputArgs[1].trim());
-            //
-            //
-            String taskJson = JsonMapperUtil.taskToJson(newTask);
-             //
-             //
-            System.out.println(taskJson);
+
 
             System.out.println("----------------------------");
             System.out.println("Task created successfully! (ID: " + newTask.getId() + ")");
@@ -121,6 +129,7 @@ public class CliApp {
                 case "list":
                     new ListHandler(service).handleListCommand(Arrays.copyOfRange(submenuArgs, 1, submenuArgs.length));
                     break;
+
                 default:
                     System.out.println("Unknown command: '" + command + "'.");
             }
