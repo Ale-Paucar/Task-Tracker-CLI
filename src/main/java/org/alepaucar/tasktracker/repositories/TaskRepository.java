@@ -67,5 +67,7 @@ public class TaskRepository {
 
     public void deleteAll() {
         jsonRepo.deleteFile();
+        loadTasksFromFile();
+        syncWithFile();
     }
 }

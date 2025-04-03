@@ -47,5 +47,6 @@ public class TaskService {
 
     public void deleteAll() {
         repository.deleteAll();
+        this.nextId = 0;
     }
 }
