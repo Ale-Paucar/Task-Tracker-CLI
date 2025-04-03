@@ -6,6 +6,7 @@ import org.alepaucar.tasktracker.repositories.TaskFileRepository;
 import org.alepaucar.tasktracker.services.ListHandler;
 import org.alepaucar.tasktracker.services.TaskHandler;
 import org.alepaucar.tasktracker.services.TaskService;
+import org.alepaucar.tasktracker.utils.JsonMapperUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +60,14 @@ public class CliApp {
     private void handleAdd(String[] inputArgs) {
         if (inputArgs.length > 1 && !inputArgs[1].isBlank()) {
             Task newTask = service.addTask(inputArgs[1].trim());
+            //
+            //
+            String taskJson = JsonMapperUtil.taskToJson(newTask);
+             //
+             //
+            System.out.println(taskJson);
+
+            System.out.println("----------------------------");
             System.out.println("Task created successfully! (ID: " + newTask.getId() + ")");
         } else {
             System.out.println("A description is missing.");

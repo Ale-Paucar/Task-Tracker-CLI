@@ -1,43 +1,77 @@
 package org.alepaucar.tasktracker.utils;
 
-import java.util.Map;
+import org.alepaucar.tasktracker.models.Task;
+import org.alepaucar.tasktracker.models.Status;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class JsonMapperUtil {
 
-    // 🔹 Constructor privado para evitar instanciación
-    private JsonMapperUtil() {}
+    private JsonMapperUtil() {} // Evitar instancias
 
-    //  Métodos principales para convertir JSON y Map
-    public static String mapToJson(Map<String, Object> map) {
-        // Convierte un Map en un JSON String
-        return null;
+
+    public static String taskToJson(Task task) {
+        return "{" +
+                "\"id\":" + task.getId() + "," +
+                "\"description\":\"" + task.getDescription() + "\"," +
+                "\"status\":\"" + task.getStatus() + "\"," +
+                "\"createdAt\":\"" + task.getCreatedAt() + "\"," +
+                "\"updatedAt\":\"" + task.getUpdatedAt() + "\"" +
+                "}";
     }
 
-    public static Map<String, Object> jsonToMap(String json) {
-        // Convierte un JSON String en un Map
-        return  null;
+
+    public static Task jsonToTask(String json) {
+        json = json.replaceAll("[{}]", "");
+        String[] pairs = json.split(",");
+
+        Map<String, String> map = new HashMap<>();
+        for (String pair : pairs) {
+            String[] keyValue = pair.split(":");
+            if (keyValue.length == 2) {
+                map.put(keyValue[0].replace("\"", "").trim(), keyValue[1].replace("\"", "").trim());
+            }
+        }
+
+        long id = Long.parseLong(map.get("id"));
+        String description = map.get("description");
+        Status status = Status.valueOf(map.get("status"));
+        LocalDateTime createdAt = LocalDateTime.parse(map.get("createdAt"));
+        LocalDateTime updatedAt = LocalDateTime.parse(map.get("updatedAt"));
+
+        return new Task(id, description, status);
     }
 
-    public static <T> String objectToJson(T obj) {
-        // Convierte un objeto en un JSON String
-        return  null;
+
+    public static String taskListToJson(List<Task> tasks) {
+        StringBuilder json = new StringBuilder("[");
+        for (int i = 0; i < tasks.size(); i++) {
+            json.append(taskToJson(tasks.get(i)));
+            if (i < tasks.size() - 1) {
+                json.append(",");
+            }
+        }
+        json.append("]");
+        return json.toString();
     }
 
-    public static <T> T jsonToObject(String json, Class<T> clazz) {
-        // Convierte un JSON String en un objeto de la clase especificada
-        return  null;
-    }
 
-    //  Métodos auxiliares
-    public static boolean isValidJson(String json) {
-        // Verifica si un string es un JSON válido4
-        return  true;
-    }
+    public static List<Task> jsonToTaskList(String json) {
+        List<Task> tasks = new ArrayList<>();
+        if (json == null || json.isEmpty() || json.equals("[]")) {
+            return tasks;
+        }
 
-    public static String prettyPrintJson(String json) {
-        // Devuelve un JSON formateado de manera legible
-        return  null;
+        json = json.substring(1, json.length() - 1); // Quitar corchetes []
+        String[] taskJsonArray = json.split("},\\{"); // Separar objetos JSON
+
+        for (String taskJson : taskJsonArray) {
+            taskJson = taskJson.startsWith("{") ? taskJson : "{" + taskJson;
+            taskJson = taskJson.endsWith("}") ? taskJson : taskJson + "}";
+            tasks.add(jsonToTask(taskJson));
+        }
+
+        return tasks;
     }
 }
-
-

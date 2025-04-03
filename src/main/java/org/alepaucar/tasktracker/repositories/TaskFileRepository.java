@@ -24,7 +24,7 @@ public class TaskFileRepository {
 
     }
 
-    public void editFile(){
+    public void readFile(){
         try {
             if(Files.exists(dataPath)){
 
