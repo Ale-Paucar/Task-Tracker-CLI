@@ -1,50 +1,56 @@
 # ✅ Task Tracker CLI  
 ## https://roadmap.sh/projects/task-tracker
-Una aplicación de línea de comandos para gestionar tareas de forma rápida y sencilla.  
+A command-line application to manage tasks quickly and easily.
 
-## 📌 Características  
-- Agregar tareas con una descripción.  
-- Listar todas las tareas pendientes y completadas.  
-- Marcar tareas como completadas.  
-- Eliminar tareas fácilmente.  
+## 📌 Features  
+- Add tasks with a description.  
+- List all pending and completed tasks.  
+- Mark tasks as completed.  
+- Easily delete tasks. 
 
-## 🛠 Requisitos  
+## 🛠 Requirements 
 - [Java 17+](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)  
 
-## 🚀 Instalación y uso  
-1️⃣ Clona este repositorio:  
+## 🚀 Installation and Usage  
+
+1. **Clone the repository:**
+
    ```bash
-   git clone https://github.com/Ale-Paucar/Task-Tracker-CLI.git
-   cd Task-Tracker-CLI
-2️⃣ Compila el proyecto:
+   git clone https://github.com/lephuocloc1729/task_tracker_cli
+   cd task_tracker_cli
 
-bash
-Copiar código
-javac -d out src/*.java
-3️⃣ Ejecuta la aplicación:
+2. **Compile the source code:**
+    ```bash
+   javac -encoding UTF-8 -d out "src\main\java\org\alepaucar\tasktracker\*.java" "src\main\java\org\alepaucar\tasktracker\cli\*.java" "src\main\java\org\alepaucar\tasktracker\models\*.java" "src\main\java\org\alepaucar\tasktracker\repositories\*.java" "src\main\java\org\alepaucar\tasktracker\services\*.java" "src\main\java\org\alepaucar\tasktracker\utils\*.java"
+3. **Run the application:**
+    ```bash
+   java -cp out org.alepaucar.tasktracker.Main
+   ```
+## Usage
+ ```bash
+# Add a new task
+add "Buy groceries"
 
-bash
-Copiar código
-java -cp out Main
-📖 Ejemplo de uso
-bash
-Copiar código
-> add "Estudiar algoritmos"
-Tarea agregada: [1] Estudiar algoritmos
+# List all tasks
+list
 
-> list
-[1] Estudiar algoritmos ❌
+# Delete all tasks
+delete-all
 
-> complete 1
-Tarea completada: [1] Estudiar algoritmos ✅
+# Edit an existing task
+edit <id> "<new task description>"
 
-> delete 1
-Tarea eliminada.
-📬 Contribuir
-Si tienes ideas o mejoras, ¡envía un PR o abre un issue! 🚀
+# Delete a specific task
+delete <id>
 
-✨ Un proyecto hecho con Java para mejorar la productividad.
+# Mark a task as in progress
+mark-in-progress <id>
 
-Copiar código
+# Mark a task as done
+mark-done <id>
 
-¡Listo para pegar en tu repo! 🚀
+# List tasks by status
+list todo
+list in-progress
+list done
+```
