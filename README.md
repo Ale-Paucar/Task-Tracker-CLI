@@ -26,7 +26,7 @@ A command-line application to manage tasks quickly and easily.
     ```bash
    java -cp out org.alepaucar.tasktracker.Main
    ```
-## Usage
+## 📝 Usage
  ```bash
 # Add a new task
 add "Buy groceries"
