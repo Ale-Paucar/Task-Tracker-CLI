@@ -16,8 +16,8 @@ A command-line application to manage tasks quickly and easily.
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/lephuocloc1729/task_tracker_cli
-   cd task_tracker_cli
+   git clone https://github.com/Ale-Paucar/Task-Tracker-CLI.git
+   cd Task-Tracker-CLI
 
 2. **Compile the source code:**
     ```bash
