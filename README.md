@@ -9,7 +9,8 @@ A command-line application to manage tasks quickly and easily.
 - Easily delete tasks. 
 
 ## 🛠 Requirements 
-- [Java 17+](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)  
+- [Java 17+](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+- [Maven](https://maven.apache.org/download.cgi)
 
 ## 🚀 Installation and Usage  
 
@@ -21,10 +22,16 @@ A command-line application to manage tasks quickly and easily.
 
 2. **Compile the source code:**
     ```bash
-   javac -encoding UTF-8 -d out "src\main\java\org\alepaucar\tasktracker\*.java" "src\main\java\org\alepaucar\tasktracker\cli\*.java" "src\main\java\org\alepaucar\tasktracker\models\*.java" "src\main\java\org\alepaucar\tasktracker\repositories\*.java" "src\main\java\org\alepaucar\tasktracker\services\*.java" "src\main\java\org\alepaucar\tasktracker\utils\*.java"
+   mvn compile
 3. **Run the application:**
+   
     ```bash
-   java -cp out org.alepaucar.tasktracker.Main
+   # Bash (Linux/macOS/CMD)
+   mvn exec:java -Dexec.mainClass=org.alepaucar.tasktracker.Main
+   ```
+    ```bash
+   # PowerShell (Windows)
+   mvn exec:java '-Dexec.mainClass=org.alepaucar.tasktracker.Main'
    ```
 ## 📝 Usage
  ```bash
