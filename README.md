@@ -1,18 +1,18 @@
-# ✅ Task Tracker CLI  
+# Task Tracker CLI  
 ## https://roadmap.sh/projects/task-tracker
 A command-line application to manage tasks quickly and easily.
 
-## 📌 Features  
+## Features  
 - Add tasks with a description.  
 - List all pending and completed tasks.  
 - Mark tasks as completed.  
 - Easily delete tasks. 
 
-## 🛠 Requirements 
+## Requirements 
 - [Java 17+](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [Maven](https://maven.apache.org/download.cgi)
 
-## 🚀 Installation and Usage  
+## nstallation and Usage  
 
 1. **Clone the repository:**
 
@@ -33,7 +33,7 @@ A command-line application to manage tasks quickly and easily.
    # PowerShell (Windows)
    mvn exec:java '-Dexec.mainClass=org.alepaucar.tasktracker.Main'
    ```
-## 📝 Usage
+## Usage
  ```bash
 # Add a new task
 add "Buy groceries"
